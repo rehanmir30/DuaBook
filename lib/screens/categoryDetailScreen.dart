@@ -1,15 +1,16 @@
 import 'package:duabook/constants/colors.dart';
+import 'package:duabook/models/categoryModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../animations/fadeInAnimationBTT.dart';
 
 class CategoryDetailScreen extends StatefulWidget {
-  String catName;
-  String icon;
-  Color color;
+  final CategoryModel categoryModel;
+  final Color color;
 
-  CategoryDetailScreen(this.catName, this.icon, this.color, {super.key});
+  const CategoryDetailScreen(this.categoryModel, this.color, {super.key});
 
   @override
   State<CategoryDetailScreen> createState() => _CategoryDetailScreenState();
@@ -52,7 +53,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                             width: 90,
                             height: 90,
                             decoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle),
-                            child: Image.asset(widget.icon),
+                            child: Lottie.asset(widget.categoryModel.animation),
                           ),
                         ),
                         SizedBox(
@@ -61,8 +62,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                         FadeInAnimationBTT(
                             delay: 1,
                             child: Text(
-                              "${widget.catName}",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 29),
+                              "${widget.categoryModel.title}",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                             ).marginOnly(top: 8))
                       ],
                     ),
@@ -89,9 +90,9 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 }
 
 class DuaTile extends StatefulWidget {
-  Color color;
-  int index;
-  DuaTile(this.color,this.index,{super.key});
+  final Color color;
+  final int index;
+  const DuaTile(this.color,this.index,{super.key});
 
   @override
   State<DuaTile> createState() => _DuaTileState();

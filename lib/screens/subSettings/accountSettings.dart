@@ -1,8 +1,6 @@
 import 'package:duabook/controller/themeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../animations/fadeInAnimationBTT.dart';
 import '../../animations/fadeInAnimationTTB.dart';
 import '../../constants/colors.dart';
 

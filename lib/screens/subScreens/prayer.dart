@@ -242,9 +242,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
 }
 
 class NamazTile extends StatefulWidget {
-  NamazModel _namazModel;
-  bool bottomLine;
-  NamazTile(this._namazModel,this.bottomLine,{super.key});
+  final NamazModel _namazModel;
+  final bool bottomLine;
+  const NamazTile(this._namazModel,this.bottomLine,{super.key});
 
   @override
   State<NamazTile> createState() => _NamazTileState();

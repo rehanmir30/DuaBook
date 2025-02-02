@@ -3,8 +3,10 @@ import 'package:duabook/animations/fadeInAnimationTTB.dart';
 import 'package:duabook/constants/colors.dart';
 import 'package:duabook/controller/themeController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../models/categoryModel.dart';
 import '../categoryDetailScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,34 +32,38 @@ class _HomeScreenState extends State<HomeScreen> {
     Color(0xffE4FEFF),
   ];
 
-  final List<String> categories = [
-    "Salah",
-    "Eating",
-    "Difficulty",
-    "Dressing",
-    "Traveling",
-    "Duas",
-    "Crying",
-    "Fasting",
-    "Meeting",
-    "Masjid & Azan",
-    "Quranic Duas",
-    "Allah",
-  ];
-
-  final List<String> iconList = [
-    "assets/images/salah.png",
-    "assets/images/eating.png",
-    "assets/images/difficulty.png",
-    "assets/images/dressing.png",
-    "assets/images/travelling.png",
-    "assets/images/duas.png",
-    "assets/images/crying.png",
-    "assets/images/fasting.png",
-    "assets/images/meeting.png",
-    "assets/images/masjid.png",
-    "assets/images/quranic_duas.png",
-    "assets/images/Allah.png"
+  final List<CategoryModel> catList=[
+    CategoryModel(id: 2, title: "RemembranceOfAllah".tr, image: "assets/svgs/remem.svg", animation: "assets/animations/rememberanceOfAllah.json"),
+    CategoryModel(id: 34, title: "QuranicDuas".tr, image: "assets/svgs/quranic.svg", animation: "assets/animations/quran.json"),
+    CategoryModel(id: 3, title: "SleepAndWakingUp".tr, image: "assets/svgs/sleep.svg", animation: "assets/animations/sleep.json"),
+    CategoryModel(id: 4, title: "Dressing".tr, image: "assets/svgs/dressing.svg", animation: "assets/animations/dressing.json"),
+    CategoryModel(id: 5, title: "Toilet".tr, image: "assets/svgs/toilet.svg", animation: "assets/animations/toilet.json"),
+    CategoryModel(id: 6, title: "Wudu".tr, image: "assets/svgs/wudu.svg", animation: "assets/animations/wudu.json"),
+    CategoryModel(id: 7, title: "InAndOutOfHouse".tr, image: "assets/svgs/inandout.svg", animation: "assets/animations/inAndOut.json"),
+    CategoryModel(id: 8, title: "MasjidAndAzan".tr, image: "assets/svgs/masjid.svg", animation: "assets/animations/masjid.json"),
+    CategoryModel(id: 9, title: "Salah".tr, image: "assets/svgs/salah.svg", animation: "assets/animations/salah.json"),
+    CategoryModel(id: 10, title: "ZikrAfterSalah".tr, image: "assets/svgs/zikr.svg", animation: "assets/animations/zikrAfterSalah.json"),
+    CategoryModel(id: 11, title: "MorningAndEveningAdkar".tr, image: "assets/svgs/morningAndEveningazkar.svg", animation: "assets/animations/morningAndEveningAdkar.json"),
+    CategoryModel(id: 12, title: "Eating".tr, image: "assets/svgs/eating.svg", animation: "assets/animations/eating.json"),
+    CategoryModel(id: 13, title: "Traveling".tr, image: "assets/svgs/traveling.svg", animation: "assets/animations/traveling.json"),
+    CategoryModel(id: 14, title: "MeetingAndGreeting".tr, image: "assets/svgs/greeting.svg", animation: "assets/animations/meeting.json"),
+    CategoryModel(id: 15, title: "ForKnowledge".tr, image: "assets/svgs/knowledge.svg", animation: "assets/animations/knowledge.json"),
+    CategoryModel(id: 16, title: "Emotions".tr, image: "assets/svgs/emotions.svg", animation: "assets/animations/emotions.json"),
+    CategoryModel(id: 17, title: "Thinking".tr, image: "assets/svgs/thanking.svg", animation: "assets/animations/thanking.json"),
+    CategoryModel(id: 18, title: "Sneezing".tr, image: "assets/svgs/sneezing.svg", animation: "assets/animations/sneezing.json"),
+    CategoryModel(id: 19, title: "Worrying".tr, image: "assets/svgs/worrying.svg", animation: "assets/animations/worrying.json"),
+    CategoryModel(id: 20, title: "NaturalEvents".tr, image: "assets/svgs/naturalEvents.svg", animation: "assets/animations/raining.json"),
+    CategoryModel(id: 21, title: "PainAndIllness".tr, image: "assets/svgs/pain.svg", animation: "assets/animations/illness.json"),
+    CategoryModel(id: 35, title: "Ruqyah".tr, image: "assets/svgs/ruqyah.svg", animation: "assets/animations/rukya.json"),
+    CategoryModel(id: 22, title: "Manners".tr, image: "assets/svgs/manners.svg", animation: "assets/animations/manners.json"),
+    CategoryModel(id: 23, title: "ProtectionAndComfort".tr, image: "assets/svgs/comfort.svg", animation: "assets/animations/protectionAndComfort.json"),
+    CategoryModel(id: 24, title: "Fasting".tr, image: "assets/svgs/fasting.svg", animation: "assets/animations/fasting.json"),
+    CategoryModel(id: 30, title: "Hajj".tr, image: "assets/svgs/hajj.svg", animation: "assets/animations/hajj.json"),
+    CategoryModel(id: 31, title: "FamilyAndWedding".tr, image: "assets/svgs/wedding.svg", animation: "assets/animations/family.json"),
+    CategoryModel(id: 26, title: "Repentance".tr, image: "assets/svgs/repentance.svg", animation: "assets/animations/repentance.json"),
+    CategoryModel(id: 27, title: "Difficulty".tr, image: "assets/svgs/difficulty.svg", animation: "assets/animations/difficulty.json"),
+    CategoryModel(id: 29, title: "FuneralAndDeath".tr, image: "assets/svgs/funeral.svg", animation: "assets/animations/funeral.json"),
+    CategoryModel(id: 33, title: "ProtectionFromDajjal".tr, image: "assets/svgs/dajjal.svg", animation: "assets/animations/dajjal.json")
   ];
 
   @override
@@ -65,6 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: GetBuilder<ThemeController>(
         builder: (themeController) {
+          List<CategoryModel> filteredCatList = catList.where((category) {
+            if (category.id == 31) {
+              return themeController.selectedAgeGroup == 2; // Include only if age group is 2
+            }
+            return true; // Include all other categories
+          }).toList();
           return Scaffold(
             backgroundColor: rwhite,
             body: SingleChildScrollView(
@@ -266,9 +278,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                       ),
-                      itemCount: categories.length,
+                      itemCount: filteredCatList.length,
                       itemBuilder: (context, index) {
-                        return CategoryTile(colors[index % colors.length], categories[index], iconList[index]);
+                        return CategoryTile(colors[index % colors.length], filteredCatList[index]);
+                        // return CategoryTile(colors[index % colors.length], catList[index]);
                       },
                     ).marginOnly(top: 12),
                   )
@@ -283,11 +296,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class CategoryTile extends StatefulWidget {
-  Color color;
-  String title;
-  String icon;
+  final Color color;
+  final CategoryModel categoryModel;
 
-  CategoryTile(this.color, this.title, this.icon, {super.key});
+  const CategoryTile(this.color,this.categoryModel, {super.key});
 
   @override
   State<CategoryTile> createState() => _CategoryTileState();
@@ -298,7 +310,7 @@ class _CategoryTileState extends State<CategoryTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.to(CategoryDetailScreen(widget.title,widget.icon,widget.color),transition: Transition.upToDown);
+        Get.to(CategoryDetailScreen(widget.categoryModel,widget.color),transition: Transition.upToDown);
       },
       child: Container(
         alignment: Alignment.center,
@@ -309,15 +321,14 @@ class _CategoryTileState extends State<CategoryTile> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(widget.icon),
+            SvgPicture.asset("${widget.categoryModel.image}",width: 40,height: 40,),
             SizedBox(
               height: 4,
             ),
-            Text(widget.title)
+            Text(widget.categoryModel.title,textAlign: TextAlign.center,).marginSymmetric(horizontal: 5)
           ],
         ),
       ),
     );
-    ;
   }
 }
