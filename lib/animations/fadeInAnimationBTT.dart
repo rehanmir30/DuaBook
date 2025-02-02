@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 class FadeInAnimationBTT extends StatefulWidget {
   const FadeInAnimationBTT({super.key, required this.child, required this.delay});

@@ -27,6 +27,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
+    super.initState();
     setState(() {
       _selectedScreen=_screens[0];
     });
