@@ -10,3 +10,6 @@ Color rpurple=Color(0xFF89A2FB);
 Color rblue=Color(0xFFC6E4FE);
 Color rgreen=Color(0xFFC6FFCA);
 Color rpurpleShade=Color(0xFFC3CCF6);
+Color rblueshade=Color(0xFF9DD6F4);
+Color ryellow=Color(0xFFF9FFB5);
+Color rbluedark=Color(0xFF2A158F);

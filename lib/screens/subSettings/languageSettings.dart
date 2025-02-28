@@ -1,6 +1,8 @@
 import 'package:duabook/constants/colors.dart';
+import 'package:duabook/controller/userController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controller/localization.dart';
 
@@ -14,29 +16,35 @@ class LanguageSettings extends StatefulWidget {
 class _LanguageSettingsState extends State<LanguageSettings> {
 
   final List<Map<String, String>> languages = [
-    {"name": "English", "flag": "🇺🇸"},
-    {"name": "Urdu", "flag": "🇵🇰"},
-    {"name": "French", "flag": "🇫🇷"},
-    {"name": "German", "flag": "🇩🇪"},
-    {"name": "Indonesian", "flag": "🇮🇩"},
-    {"name": "Japanese", "flag": "🇯🇵"},
-    {"name": "Malay", "flag": "🇲🇾"},
-    {"name": "Mandarin", "flag": "🇨🇳"},
-    {"name": "Portuguese", "flag": "🇵🇹"},
-    {"name": "Russian", "flag": "🇷🇺"},
-    {"name": "Spanish", "flag": "🇪🇸"},
-    {"name": "Turkish", "flag": "🇹🇷"},
-    {"name": "Bengali", "flag": "🇧🇩"},
-    {"name": "Arabic", "flag": "🇸🇦"},
-    {"name": "Hindi", "flag": "🇮🇳"},
-    {"name": "Marathi", "flag": "🇮🇳"},
-    {"name": "Telugu", "flag": "🇮🇳"},
-    {"name": "Gujarati", "flag": "🇮🇳"},
-    {"name": "Tamil", "flag": "🇮🇳"},
-    {"name": "Punjabi", "flag": "🇮🇳"},
+    {"name": "english", "flag": "🇺🇸"},
+    {"name": "urdu", "flag": "🇵🇰"},
+    {"name": "french", "flag": "🇫🇷"},
+    {"name": "german", "flag": "🇩🇪"},
+    {"name": "indonesian", "flag": "🇮🇩"},
+    {"name": "japanese", "flag": "🇯🇵"},
+    {"name": "malay", "flag": "🇲🇾"},
+    {"name": "mandarin", "flag": "🇨🇳"},
+    {"name": "portuguese", "flag": "🇵🇹"},
+    {"name": "russian", "flag": "🇷🇺"},
+    {"name": "spanish", "flag": "🇪🇸"},
+    {"name": "turkish", "flag": "🇹🇷"},
+    {"name": "bengali", "flag": "🇧🇩"},
+    {"name": "arabic", "flag": "🇸🇦"},
+    {"name": "hindi", "flag": "🇮🇳"},
+    {"name": "marathi", "flag": "🇮🇳"},
+    {"name": "telugu", "flag": "🇮🇳"},
+    {"name": "gujarati", "flag": "🇮🇳"},
+    {"name": "tamil", "flag": "🇮🇳"},
+    {"name": "punjabi", "flag": "🇮🇳"},
   ];
 
-  String selectedLanguage = "English"; // Default selected language
+  String selectedLanguage = Get.find<UserController>().selectedLanguage;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +68,9 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               child: DropdownButtonHideUnderline(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white, // Set closed dropdown background to white
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade300), // Optional border for better visibility
+                    border: Border.all(color: Colors.grey.shade300),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: DropdownButton<String>(
@@ -76,12 +84,12 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                     borderRadius: BorderRadius.circular(12),
                     items: languages.map((language) {
                       return DropdownMenuItem<String>(
-                        value: language['name'],
+                        value: language['name']!,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${language['flag']} ${language['name']}",
+                              "${language['flag']} ${language['name']!.capitalize}",
                               style: const TextStyle(fontSize: 16),
                             ),
                             if (selectedLanguage == language['name'])
@@ -90,12 +98,16 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (String? newValue) {
+                    onChanged: (String? newValue) async{
                       setState(() {
                         selectedLanguage = newValue!;
-                        print(newValue);
                       });
-                      Localization.changeLocale(newValue!);
+                      SharedPreferences prefs=await SharedPreferences.getInstance();
+                      prefs.setString("selectedLanguage", newValue!);
+
+                      print(prefs.getString("selectedLanguage"));
+
+                      Get.find<UserController>().setSelectedLanguage(newValue);
                     },
                   ),
                 ),
