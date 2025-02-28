@@ -1,10 +1,13 @@
 import 'package:duabook/animations/fadeInAnimationBTT.dart';
 import 'package:duabook/animations/fadeInAnimationTTB.dart';
 import 'package:duabook/constants/colors.dart';
+import 'package:duabook/constants/userData.dart';
 import 'package:duabook/controller/themeController.dart';
+import 'package:duabook/controller/userController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/categoryModel.dart';
 import '../categoryDetailScreen.dart';
@@ -66,6 +69,19 @@ class _HomeScreenState extends State<HomeScreen> {
     CategoryModel(id: 33, title: "ProtectionFromDajjal".tr, image: "assets/svgs/dajjal.svg", animation: "assets/animations/dajjal.json")
   ];
 
+
+  @override
+  void initState() {
+    getSharedPrefs();
+  }
+
+  getSharedPrefs()async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    String? selectedLang=await prefs.getString("selectedLanguage");
+
+    Get.find<UserController>().setSelectedLanguage(selectedLang??"english");
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,35 +89,39 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (themeController) {
           List<CategoryModel> filteredCatList = catList.where((category) {
             if (category.id == 31) {
-              return themeController.selectedAgeGroup == 2; // Include only if age group is 2
+              return themeController.selectedAgeGroup == 2;
             }
-            return true; // Include all other categories
+            return true;
           }).toList();
           return Scaffold(
             backgroundColor: rwhite,
             body: SingleChildScrollView(
               child: Column(
                 children: [
+                  SizedBox(height: 20,),
                   //top bar
                   FadeInAnimationTTB(
                     delay: 1,
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.15,
-                          height: MediaQuery.of(context).size.height * 0.15,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              border: Border.all(
-                                  color: themeController.selectedAgeGroup == 0
-                                      ? rpink
-                                      : themeController.selectedAgeGroup == 1
-                                          ? rblue
-                                          : rgreen,
-                                  width: 3),
-                              shape: BoxShape.circle),
-                        ),
+                        GetBuilder<UserController>(builder: (userController){
+                          return Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                border: Border.all(
+                                    color: themeController.selectedAgeGroup == 0
+                                        ? rpink
+                                        : themeController.selectedAgeGroup == 1
+                                        ? rblue
+                                        : rgreen,
+                                    width: 3),
+                                shape: BoxShape.circle),
+                            child: userController.avatar!=""?ClipOval(child: Image.asset(userController.avatar)):SizedBox(),
+                          );
+                        }),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -110,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(color: rhint, fontSize: 12),
                             ),
                             Text(
-                              "Ghazanfar",
+                              isLoggedIn?userName:"Guest User",
                               style: TextStyle(color: rtext, fontSize: 17, fontWeight: FontWeight.bold),
                             )
                           ],
@@ -126,23 +146,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? rblue
                                               : rgreen,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.currency_bitcoin,
-                                        color: rblack,
-                                      ),
-                                      Text(
-                                        "1200",
-                                        style: TextStyle(color: rblack, fontSize: 14),
-                                      )
-                                    ],
-                                  ).paddingSymmetric(horizontal: 12, vertical: 3),
+                                  child: GetBuilder<UserController>(builder: (userController){
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.currency_bitcoin,
+                                          color: rblack,
+                                        ),
+                                        Text(
+                                          "${points}",
+                                          style: TextStyle(color: rblack, fontSize: 14),
+                                        )
+                                      ],
+                                    ).paddingSymmetric(horizontal: 12, vertical: 3);
+                                  },),
                                 )))
                       ],
                     ).marginOnly(top: 8),
                   ),
+                  SizedBox(height: 20,),
                   //banner
                   Container(
                     width: MediaQuery.of(context).size.width,

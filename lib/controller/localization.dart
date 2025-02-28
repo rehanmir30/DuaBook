@@ -9,32 +9,33 @@ class Localization extends Translations {
 
 // List of supported locales
   static final locales = [
-    Locale('English', 'US'),
-    Locale('French', 'FR'),
-    Locale('German', 'DE'),
-    Locale('Indonesian', 'ID'),
-    Locale('Japanese', 'JP'),
-    Locale('Malay', 'MY'),
-    Locale('Mandarin', 'CN'),
-    Locale('Portuguese', 'PT'),
-    Locale('Russian', 'RU'),
-    Locale('Spanish', 'ES'),
-    Locale('Turkish', 'TR'),
-    Locale('Bengali', 'BD'),
-    Locale('Urdu', 'PK'),
-    Locale('Arabic', 'SA'),
-    Locale('Hindi', 'IN'),
-    Locale('Marathi', 'IN'),
-    Locale('Telugu', 'IN'),
-    Locale('Gujarati', 'IN'),
-    Locale('Tamil', 'IN'),
-    Locale('Punjabi', 'PK')
+    Locale('english', 'US'),
+    Locale('french', 'FR'),
+    Locale('german', 'DE'),
+    Locale('indonesian', 'ID'),
+    Locale('japanese', 'JP'),
+    Locale('malay', 'MY'),
+    Locale('mandarin', 'CN'),
+    Locale('portuguese', 'PT'),
+    Locale('russian', 'RU'),
+    Locale('spanish', 'ES'),
+    Locale('turkish', 'TR'),
+    Locale('bengali', 'BD'),
+    Locale('urdu', 'PK'),
+    Locale('arabic', 'SA'),
+    Locale('hindi', 'IN'),
+    Locale('marathi', 'IN'),
+    Locale('telugu', 'IN'),
+    Locale('gujarati', 'IN'),
+    Locale('tamil', 'IN'),
+    Locale('punjabi', 'PK')
   ];
 
   // Function to change the locale
   static void changeLocale(String languageCode) {
     final locale = getLocaleFromLanguageCode(languageCode);
     if (locale != null) {
+
       Get.updateLocale(locale);
     }
   }

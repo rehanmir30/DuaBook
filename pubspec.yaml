@@ -41,6 +41,15 @@ dependencies:
   intl:
   hijri:
   lottie:
+  sqflite:
+  path:
+  audioplayers:
+  prayers_times:
+  geolocator:
+  flutter_compass:
+  shared_preferences:
+  flutter_local_notifications:
+  workmanager:
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +78,9 @@ flutter:
     - assets/svgs/
     - assets/images/
     - assets/animations/
+    - assets/musics/
+    - assets/khushikids.db
+    - assets/audio/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

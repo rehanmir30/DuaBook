@@ -1,7 +1,7 @@
 
   class AppTranslations {
   static Map<String, Map<String, String>> translations = {
-  "English": {
+  "english": {
   "RemembranceOfAllah": "Remembrance of Allah",
   "QuranicDuas": "Quranic Duas",
   "SleepAndWakingUp": "Sleep and Waking Up",
@@ -34,7 +34,7 @@
   "FuneralAndDeath": "Funeral and Death",
   "ProtectionFromDajjal": "Protection from Dajjal",
   },
-  "French": {
+  "french": {
   "RemembranceOfAllah": "Rappel d'Allah",
   "QuranicDuas": "Duas coraniques",
   "SleepAndWakingUp": "Sommeil et réveil",
@@ -67,7 +67,7 @@
   "FuneralAndDeath": "Funérailles et mort",
   "ProtectionFromDajjal": "Protection contre Dajjal",
   },
-  "German": {
+  "german": {
   "RemembranceOfAllah": "Erinnerung an Allah",
   "QuranicDuas": "Koranische Duas",
   "SleepAndWakingUp": "Schlafen und Aufwachen",
@@ -100,7 +100,7 @@
   "FuneralAndDeath": "Beerdigung und Tod",
   "ProtectionFromDajjal": "Schutz vor Dajjal",
   },
-  "Indonesian": {
+  "indonesian": {
   "RemembranceOfAllah": "Pengingat Allah",
   "QuranicDuas": "Doa Quran",
   "SleepAndWakingUp": "Tidur dan Bangun",
@@ -133,7 +133,7 @@
   "FuneralAndDeath": "Pemakaman dan Kematian",
   "ProtectionFromDajjal": "Perlindungan dari Dajjal",
   },
-  "Japanese": {
+  "japanese": {
   "RemembranceOfAllah": "アッラーの記念",
   "QuranicDuas": "コーランのドゥア",
   "SleepAndWakingUp": "睡眠と目覚め",
@@ -167,7 +167,7 @@
   "ProtectionFromDajjal": "ダッジャールからの保護",
   },
 
-    "Malay":{
+    "malay":{
       "RemembranceOfAllah":"Zikir kepada Allah",
       "QuranicDuas":"Doa-doa Al-Quran",
       "SleepAndWakingUp":"Tidur dan Bangun",
@@ -200,7 +200,7 @@
       "FuneralAndDeath":"Pengebumian dan Kematian",
       "ProtectionFromDajjal":"Perlindungan dari Dajjal"
     },
-    "Mandrain":{
+    "mandrain":{
       "RemembranceOfAllah":"记住真主",
       "QuranicDuas":"古兰经祈祷",
       "SleepAndWakingUp":"睡觉和起床",
@@ -233,7 +233,7 @@
       "FuneralAndDeath":"葬礼与死亡",
       "ProtectionFromDajjal":"防止敌基督"
     },
-    "Portuguese":{
+    "portuguese":{
       "RemembranceOfAllah":"Lembrança de Allah",
       "QuranicDuas":"Duas do Alcorão",
       "SleepAndWakingUp":"Dormir e Acordar",
@@ -266,7 +266,7 @@
       "FuneralAndDeath":"Funeral e Morte",
       "ProtectionFromDajjal":"Proteção contra Dajjal"
     },
-    "Russian":{
+    "russian":{
       "RemembranceOfAllah":"Поминовение Аллаха",
       "QuranicDuas":"Дуа из Корана",
       "SleepAndWakingUp":"Сон и Пробуждение",
@@ -299,7 +299,7 @@
       "FuneralAndDeath":"Похороны и Смерть",
       "ProtectionFromDajjal":"Защита от Даджаля"
     },
-    "Spanish":{
+    "spanish":{
       "RemembranceOfAllah":"Recuerdo de Alá",
       "QuranicDuas":"Duas del Corán",
       "SleepAndWakingUp":"Dormir y Despertar",
@@ -332,7 +332,7 @@
       "FuneralAndDeath":"Funeral y Muerte",
       "ProtectionFromDajjal":"Protección contra el Dajjal"
     },
-    "Turkish":{
+    "turkish":{
       "RemembranceOfAllah":"Allah'ı Anmak",
       "QuranicDuas":"Kur'an Duaları",
       "SleepAndWakingUp":"Uyuma ve Uyanma",
@@ -365,7 +365,7 @@
       "FuneralAndDeath":"Cenaze ve Ölüm",
       "ProtectionFromDajjal":"Deccal'dan Korunma"
     },
-    "Bengali":{
+    "bengali":{
       "RemembranceOfAllah":"আল্লাহকে স্মরণ",
       "QuranicDuas":"কুরআনের দোয়া",
       "SleepAndWakingUp":"ঘুমানো এবং জাগা",
@@ -398,7 +398,7 @@
       "FuneralAndDeath":"জানাজা এবং মৃত্যু",
       "ProtectionFromDajjal":"দাজ্জাল থেকে সুরক্ষা"
     },
-    "Urdu":{
+    "urdu":{
       "RemembranceOfAllah":"اللہ کا ذکر",
       "QuranicDuas":"قرآنی دعائیں",
       "SleepAndWakingUp":"سونا اور جاگنا",
@@ -431,7 +431,7 @@
       "FuneralAndDeath":"جنازہ اور موت",
       "ProtectionFromDajjal":"دجال سے حفاظت"
     },
-    "Arabic":{
+    "arabic":{
       "RemembranceOfAllah":"ذكر الله",
       "QuranicDuas":"أدعية قرآنية",
       "SleepAndWakingUp":"النوم والاستيقاظ",
@@ -464,7 +464,7 @@
       "FuneralAndDeath":"الجنازة والموت",
       "ProtectionFromDajjal":"الحماية من الدجال"
     },
-    "Hindi":{
+    "hindi":{
       "RemembranceOfAllah":"अल्लाह की याद",
       "QuranicDuas":"क़ुरानिक दुआएँ",
       "SleepAndWakingUp":"सोना और जागना",
@@ -497,7 +497,7 @@
       "FuneralAndDeath":"अंतिम संस्कार और मृत्यु",
       "ProtectionFromDajjal":"दज्जाल से सुरक्षा"
     },
-    "Marathi":{
+    "marathi":{
       "RemembranceOfAllah":"अल्लाहचे स्मरण",
       "QuranicDuas":"कुरआनी दुवा",
       "SleepAndWakingUp":"झोप आणि जागणे",
@@ -530,7 +530,7 @@
       "FuneralAndDeath":"अंत्यसंस्कार आणि मृत्यू",
       "ProtectionFromDajjal":"दज्जालपासून संरक्षण"
     },
-    "Telugu":{
+    "telugu":{
       "RemembranceOfAllah":"అల్లాహ్‌ను స్మరించడం",
       "QuranicDuas":"ఖురానిక్ ప్రార్థనలు",
       "SleepAndWakingUp":"నిద్ర మరియు లేవడం",
@@ -563,7 +563,7 @@
       "FuneralAndDeath":"అంత్యక్రియలు మరియు మరణం",
       "ProtectionFromDajjal":"దజ్జాల్ నుండి రక్షణ"
     },
-    "Gujarati":{
+    "gujarati":{
       "RemembranceOfAllah":"અલ્લાહને યાદ કરવું",
       "QuranicDuas":"કોરાનિક દુઆઓ",
       "SleepAndWakingUp":"ઊંઘ અને ઉઠવું",
@@ -596,7 +596,7 @@
       "FuneralAndDeath":"અંતિમ સંસ્કાર અને મરણ",
       "ProtectionFromDajjal":"દજ્જાલથી રક્ષણ"
     },
-    "Tamil":{
+    "tamil":{
       "RemembranceOfAllah":"அல்லாஹ்வின் நினைவு",
       "QuranicDuas":"குர்ஆன் துஆக்கள்",
       "SleepAndWakingUp":"தூங்கவும் விழிக்கவும்",
@@ -629,7 +629,7 @@
       "FuneralAndDeath":"அறிவியல் மற்றும் இறப்பு",
       "ProtectionFromDajjal":"தஜ்ஜால் இருந்து பாதுகாப்பு"
     },
-    "Punjabi":{
+    "punjabi":{
       "RemembranceOfAllah":"اللہ دا ذکر",
       "QuranicDuas":"قرآنی دعائیں",
       "SleepAndWakingUp":"سونا تے جاگنا",
@@ -662,7 +662,5 @@
       "FuneralAndDeath":"جنازہ تے موت",
       "ProtectionFromDajjal":"دجال توں حفاظت"
     }
-
-
   };
 }

@@ -1,9 +1,15 @@
+import 'package:duabook/constants/userData.dart';
+import 'package:duabook/controller/userController.dart';
 import 'package:duabook/screens/subScreens/home.dart';
 import 'package:duabook/screens/subScreens/notification.dart';
 import 'package:duabook/screens/subScreens/prayer.dart';
 import 'package:duabook/screens/subScreens/search.dart';
 import 'package:duabook/screens/subScreens/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../controller/localization.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -20,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
     HomeScreen(),
     PrayerScreen(),
     SettingsScreen(),
-    SearchScreen(),
+    // SearchScreen(),
     NotificationScreen(),
   ];
 
@@ -28,9 +34,27 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+    getSharedPrefs();
     setState(() {
       _selectedScreen=_screens[0];
     });
+  }
+
+  getSharedPrefs()async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    isLoggedIn= await prefs.getBool("isLoggedIn")??false;
+    points=await prefs.getInt("userPoints")??0;
+    userName = await prefs.getString("userName")??"Guest User";
+    avatar = await prefs.getString("userAvatar")??"";
+    String? selectedLang=await prefs.getString("selectedLanguage");
+
+    print(prefs.getString("selectedLanguage"));
+    Get.find<UserController>().setSelectedLanguage(selectedLang??"english");
+    Get.find<UserController>().setUserName(userName);
+    Get.find<UserController>().setLoggedIn(false);
+    Get.find<UserController>().setPoints(points);
+    Get.find<UserController>().setAvatar(avatar);
+
   }
 
   void _onItemTapped(int index) {
@@ -54,7 +78,7 @@ class _DashboardState extends State<Dashboard> {
               onTap: () => _onItemTapped(0),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              child: Image.asset("assets/images/home.png"),
+              child: Image.asset("assets/images/prayer.png"),
             ),
             label: '',
           ),
@@ -63,7 +87,7 @@ class _DashboardState extends State<Dashboard> {
               onTap: () => _onItemTapped(1),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              child: Image.asset("assets/images/prayer.png"),
+              child: Image.asset("assets/images/home.png"),
             ),
             label: '',
           ),
@@ -76,22 +100,22 @@ class _DashboardState extends State<Dashboard> {
             ),
             label: '',
           ),
+          // BottomNavigationBarItem(
+          //   icon: InkWell(
+          //     onTap: () => _onItemTapped(3),
+          //     splashColor: Colors.transparent,
+          //     highlightColor: Colors.transparent,
+          //     child: Image.asset(
+          //       "assets/images/search.png",
+          //       width: 30,
+          //       height: 30,
+          //     ),
+          //   ),
+          //   label: '',
+          // ),
           BottomNavigationBarItem(
             icon: InkWell(
               onTap: () => _onItemTapped(3),
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              child: Image.asset(
-                "assets/images/search.png",
-                width: 30,
-                height: 30,
-              ),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: InkWell(
-              onTap: () => _onItemTapped(4),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               child: Image.asset(
