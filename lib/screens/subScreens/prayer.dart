@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:prayers_times/prayers_times.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/namazModel.dart';
 import '../qiblaDirection.dart';
@@ -30,6 +31,13 @@ class _PrayerScreenState extends State<PrayerScreen> {
   bool locationAllowed = false;
 
   List<NamazModel> _namazList = [];
+
+  var fajrVolume = "on";
+  var sunriseVolume = "on";
+  var dhuhrVolume = "on";
+  var asrVolume = "on";
+  var maghribVolume = "on";
+  var ishaaVolume = "on";
 
   @override
   void initState() {
@@ -58,9 +66,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
           locationAllowed = true;
         });
       }
-    } else if(permission==LocationPermission.deniedForever) {
+    } else if (permission == LocationPermission.deniedForever) {
 
-    }else{
+    } else {
       setState(() {
         locationAllowed = true;
       });
@@ -93,25 +101,26 @@ class _PrayerScreenState extends State<PrayerScreen> {
       locationName: 'Asia/Kolkata',
     );
 
-    _namazList.add(
-      NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.fajrStartTime!)}", name: "Fajr", speakerEnabled: true),
-    );
-    _namazList.add(
-      NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.sunrise!)}", name: "Sunrise", speakerEnabled: true),
-    );
-    _namazList.add(
-      NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.dhuhrStartTime!)}", name: "Dhuhr", speakerEnabled: true),
-    );
-    _namazList.add(
-      NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.asrStartTime!)}", name: "Asr", speakerEnabled: true),
-    );
-    // _namazList.add(NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.!)}", name: "Fajr", speakerEnabled: true),);
-    _namazList.add(
-      NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.maghribStartTime!)}", name: "Maghrib", speakerEnabled: true),
-    );
-    _namazList.add(
-      NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.ishaStartTime!)}", name: "Ishaa", speakerEnabled: true),
-    );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    NamazModel fajr = NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.fajrStartTime!)}", name: "Fajr", speakerEnabled: "on");
+    NamazModel sunrise = NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.sunrise!)}", name: "Sunrise", speakerEnabled: "on");
+    NamazModel dhuhr = NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.dhuhrStartTime!)}", name: "Dhuhr", speakerEnabled: "on");
+    NamazModel asr = NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.asrStartTime!)}", name: "Asr", speakerEnabled: "on");
+    NamazModel maghrib = NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.maghribStartTime!)}", name: "Maghrib", speakerEnabled: "on");
+    NamazModel isha = NamazModel(time: "${DateFormat('hh:mm a').format(prayerTimes.ishaStartTime!)}", name: "Ishaa", speakerEnabled: "on");
+    fajr.speakerEnabled = prefs.getString("fajrSpeaker")??"on";
+    sunrise.speakerEnabled = prefs.getString("sunriseSpeaker")??"on";
+    dhuhr.speakerEnabled = prefs.getString("dhuhrSpeaker")??"on";
+    asr.speakerEnabled = prefs.getString("aasrSpeaker")??"on";
+    maghrib.speakerEnabled = prefs.getString("maghribSpeaker")??"on";
+    isha.speakerEnabled = prefs.getString("ishaSpeaker")??"on";
+
+    _namazList.add(fajr);
+    _namazList.add(sunrise);
+    _namazList.add(dhuhr);
+    _namazList.add(asr);
+    _namazList.add(maghrib);
+    _namazList.add(isha);
   }
 
   void _incrementDate() {
@@ -175,8 +184,14 @@ class _PrayerScreenState extends State<PrayerScreen> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
           decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: AssetImage("assets/images/prayerBg.png"))),
           child: SingleChildScrollView(
             child: Column(
@@ -188,9 +203,11 @@ class _PrayerScreenState extends State<PrayerScreen> {
                       onTap: () {
                         if (locationAllowed) {
                           // Get.to(QiblaDirection(latitude:currentPosition?.latitude??0,longitude:currentPosition?.longitude??0),transition: Transition.fade);
-                          Get.to(CompassScreen(latitude:currentPosition?.latitude??0,longitude:currentPosition?.longitude??0),transition: Transition.fade);
+                          Get.to(CompassScreen(latitude: currentPosition?.latitude ?? 0, longitude: currentPosition?.longitude ?? 0),
+                              transition: Transition.fade);
                         } else {
-                          Get.snackbar("Location required", "Please enable location permissions from your phone settings",backgroundColor: Colors.red);
+                          Get.snackbar("Location required", "Please enable location permissions from your phone settings", backgroundColor: Colors
+                              .red);
                         }
                       },
                       child: Image.asset(
@@ -281,32 +298,35 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 //namaz time
                 locationAllowed
                     ? FadeInAnimationTTB(
-                        delay: 1,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: rwhite.withOpacity(0.2),
-                            border: Border.all(color: rwhite),
-                            borderRadius: BorderRadius.circular(24),
-                          ),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: _namazList.length,
-                              itemBuilder: (context, index) {
-                                if (index == _namazList.length - 1) {
-                                  return NamazTile(_namazList[index], false);
-                                } else {
-                                  return NamazTile(_namazList[index], true);
-                                }
-                              }),
-                        ),
-                      )
+                  delay: 1,
+                  child: Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    decoration: BoxDecoration(
+                      color: rwhite.withOpacity(0.2),
+                      border: Border.all(color: rwhite),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: _namazList.length,
+                        itemBuilder: (context, index) {
+                          if (index == _namazList.length - 1) {
+                            return NamazTile(_namazList[index], false);
+                          } else {
+                            return NamazTile(_namazList[index], true);
+                          }
+                        }),
+                  ),
+                )
                     : Center(
-                        child: Text(
-                        "Location is not enabled",
-                        style: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
-                      )),
+                    child: Text(
+                      "Location is not enabled",
+                      style: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
+                    )),
 
                 SizedBox(
                   height: 20,
@@ -317,10 +337,13 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.7,
                       height: 80,
                       decoration:
-                          BoxDecoration(color: rwhite.withOpacity(0.2), borderRadius: BorderRadius.circular(19), border: Border.all(color: rwhite)),
+                      BoxDecoration(color: rwhite.withOpacity(0.2), borderRadius: BorderRadius.circular(19), border: Border.all(color: rwhite)),
                       child: Divider(
                         height: 2,
                         color: rwhite,
@@ -370,9 +393,64 @@ class _NamazTileState extends State<NamazTile> {
                 ).marginSymmetric(horizontal: 10)),
             Expanded(
                 flex: 1,
-                child: Icon(
-                  widget._namazModel.speakerEnabled ? Icons.volume_up_rounded : Icons.volume_mute,
-                  color: rblack,
+                child: InkWell(
+                  onTap: ()async{
+                    SharedPreferences prefs=await SharedPreferences.getInstance();
+
+                    setState(() {
+                      if(widget._namazModel.speakerEnabled=="on"){
+                        widget._namazModel.speakerEnabled="off";
+                        if(widget._namazModel.name=="Fajr"){
+                          prefs.setString("fajrSpeaker","off");
+                        }if(widget._namazModel.name=="Sunrise"){
+                          prefs.setString("sunriseSpeaker","off");
+                        }if(widget._namazModel.name=="Dhuhr"){
+                          prefs.setString("dhuhrSpeaker","off");
+                        }if(widget._namazModel.name=="Asr"){
+                          prefs.setString("asrSpeaker","off");
+                        }if(widget._namazModel.name=="Maghrib"){
+                          prefs.setString("maghribSpeaker","off");
+                        }if(widget._namazModel.name=="Ishaa"){
+                          prefs.setString("ishaSpeaker","off");
+                        }
+
+                      }else if(widget._namazModel.speakerEnabled=="off"){
+                        widget._namazModel.speakerEnabled="vibrate";
+                        if(widget._namazModel.name=="Fajr"){
+                          prefs.setString("fajrSpeaker","vibrate");
+                        }if(widget._namazModel.name=="Sunrise"){
+                          prefs.setString("sunriseSpeaker","vibrate");
+                        }if(widget._namazModel.name=="Dhuhr"){
+                          prefs.setString("dhuhrSpeaker","vibrate");
+                        }if(widget._namazModel.name=="Asr"){
+                          prefs.setString("asrSpeaker","vibrate");
+                        }if(widget._namazModel.name=="Maghrib"){
+                          prefs.setString("maghribSpeaker","vibrate");
+                        }if(widget._namazModel.name=="Ishaa"){
+                          prefs.setString("ishaSpeaker","vibrate");
+                        }
+                      }else{
+                        widget._namazModel.speakerEnabled="on";
+                        if(widget._namazModel.name=="Fajr"){
+                          prefs.setString("fajrSpeaker","on");
+                        }if(widget._namazModel.name=="Sunrise"){
+                          prefs.setString("sunriseSpeaker","on");
+                        }if(widget._namazModel.name=="Dhuhr"){
+                          prefs.setString("dhuhrSpeaker","on");
+                        }if(widget._namazModel.name=="Asr"){
+                          prefs.setString("asrSpeaker","on");
+                        }if(widget._namazModel.name=="Maghrib"){
+                          prefs.setString("maghribSpeaker","on");
+                        }if(widget._namazModel.name=="Ishaa"){
+                          prefs.setString("ishaSpeaker","on");
+                        }
+                      }
+                    });
+                  },
+                  child: Icon(
+                    widget._namazModel.speakerEnabled=="on" ? Icons.volume_up_rounded :widget._namazModel.speakerEnabled=="off"? Icons.volume_mute:Icons.vibration,
+                    color: rblack,
+                  ),
                 )),
           ],
         ).marginSymmetric(horizontal: 12, vertical: 8),

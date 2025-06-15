@@ -6,10 +6,11 @@ import 'package:sqflite/sqflite.dart';
 
 import '../controller/categoryDetailController.dart';
 import '../database/initDb.dart';
+import '../models/categoryModel.dart';
 
 class CategoryDetailService {
   CategoryDetailController _categoryDetailController = Get.find<CategoryDetailController>();
-  ThemeController _themeController=Get.find<ThemeController>();
+  ThemeController _themeController = Get.find<ThemeController>();
 
   Future<void> getSubCategories(int id) async {
     _categoryDetailController.setLoading(true);
@@ -25,7 +26,7 @@ class CategoryDetailService {
       );
       List<SubCategoryModel> _list = [];
       for (var item in duas) {
-        SubCategoryModel subCategoryModel=SubCategoryModel.fromJson(item);
+        SubCategoryModel subCategoryModel = SubCategoryModel.fromJson(item);
 
         List<Map<String, dynamic>> duas = await db.query(
           'sentence',
@@ -34,32 +35,31 @@ class CategoryDetailService {
         );
         List<DuaModel> duaList = [];
         for (var item in duas) {
-          DuaModel dua=DuaModel.fromJson(item);
+          DuaModel dua = DuaModel.fromJson(item);
           duaList.add(dua);
         }
-        if(duaList.every((element) => element.done=="1")){
-          subCategoryModel.isComplete=true;
-        }else{
-          subCategoryModel.isComplete=false;
+        if (duaList.every((element) => element.done == "1")) {
+          subCategoryModel.isComplete = true;
+        } else {
+          subCategoryModel.isComplete = false;
         }
-        if(_themeController.selectedAgeGroup==0){
-          if(subCategoryModel.littleKids=="t"){
+        if (_themeController.selectedAgeGroup == 0) {
+          if (subCategoryModel.littleKids == "t") {
             _list.add(subCategoryModel);
           }
-        }else if(_themeController.selectedAgeGroup==1){
-          if(subCategoryModel.olderKids=="t"){
+        } else if (_themeController.selectedAgeGroup == 1) {
+          if (subCategoryModel.olderKids == "t") {
             _list.add(subCategoryModel);
           }
-        }else if(_themeController.selectedAgeGroup==2){
-          if(subCategoryModel.grownUps=="t"){
+        } else if (_themeController.selectedAgeGroup == 2) {
+          if (subCategoryModel.grownUps == "t") {
             _list.add(subCategoryModel);
           }
         }
-
       }
       _categoryDetailController.populateSubCategoryList(_list);
       _categoryDetailController.setLoading(false);
-    } catch (e,stackTrace) {
+    } catch (e, stackTrace) {
       print("Exception: $e");
       print("Stack Trace: $stackTrace");
 
@@ -67,9 +67,63 @@ class CategoryDetailService {
     }
   }
 
-  void getDuas(SubCategoryModel subCategoryModel) async{
+  Future<List<SubCategoryModel>> getAllSubCategories(List<CategoryModel> list) async {
+    List<SubCategoryModel> allSubCategories = [];
+    try {
+      Database db = await initializeDb();
+      for (var id in list) {
+        List<Map<String, dynamic>> duas = await db.query(
+          'duatext',
+          where: 'category_id = ?',
+          orderBy: "id",
+          whereArgs: [id.id],
+        );
+        List<SubCategoryModel> _list = [];
+        for (var item in duas) {
+          SubCategoryModel subCategoryModel = SubCategoryModel.fromJson(item);
+
+          List<Map<String, dynamic>> duas = await db.query(
+            'sentence',
+            where: 'duaText_id = ?',
+            whereArgs: [subCategoryModel.id],
+          );
+          List<DuaModel> duaList = [];
+          for (var item in duas) {
+            DuaModel dua = DuaModel.fromJson(item);
+            duaList.add(dua);
+          }
+          if (duaList.every((element) => element.done == "1")) {
+            subCategoryModel.isComplete = true;
+          } else {
+            subCategoryModel.isComplete = false;
+          }
+          if (_themeController.selectedAgeGroup == 0) {
+            if (subCategoryModel.littleKids == "t") {
+              _list.add(subCategoryModel);
+            }
+          } else if (_themeController.selectedAgeGroup == 1) {
+            if (subCategoryModel.olderKids == "t") {
+              _list.add(subCategoryModel);
+            }
+          } else if (_themeController.selectedAgeGroup == 2) {
+            if (subCategoryModel.grownUps == "t") {
+              _list.add(subCategoryModel);
+            }
+          }
+        }
+        allSubCategories.addAll(_list);
+      }
+      return allSubCategories;
+    } catch (e, stackTrace) {
+      print("Exception: $e");
+      print("Stack Trace: $stackTrace");
+      return allSubCategories;
+    }
+  }
+
+  void getDuas(SubCategoryModel subCategoryModel) async {
     _categoryDetailController.setLoading(true);
-    try{
+    try {
       Database db = await initializeDb();
 
       List<Map<String, dynamic>> duas = await db.query(
@@ -84,7 +138,7 @@ class CategoryDetailService {
       _categoryDetailController.populateDuaList(_list);
 
       _categoryDetailController.setLoading(false);
-    }catch (e,stackTrace) {
+    } catch (e, stackTrace) {
       print("Exception: $e");
       print("Stack Trace: $stackTrace");
 

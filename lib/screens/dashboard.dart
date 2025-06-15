@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
     HomeScreen(),
     PrayerScreen(),
     SettingsScreen(),
-    // SearchScreen(),
+    SearchScreen(),
     NotificationScreen(),
   ];
 
@@ -100,22 +100,22 @@ class _DashboardState extends State<Dashboard> {
             ),
             label: '',
           ),
-          // BottomNavigationBarItem(
-          //   icon: InkWell(
-          //     onTap: () => _onItemTapped(3),
-          //     splashColor: Colors.transparent,
-          //     highlightColor: Colors.transparent,
-          //     child: Image.asset(
-          //       "assets/images/search.png",
-          //       width: 30,
-          //       height: 30,
-          //     ),
-          //   ),
-          //   label: '',
-          // ),
           BottomNavigationBarItem(
             icon: InkWell(
               onTap: () => _onItemTapped(3),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              child: Image.asset(
+                "assets/images/search.png",
+                width: 30,
+                height: 30,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: InkWell(
+              onTap: () => _onItemTapped(4),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               child: Image.asset(

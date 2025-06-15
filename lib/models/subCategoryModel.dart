@@ -11,7 +11,7 @@ String subCategoryModelToJson(SubCategoryModel data) => json.encode(data.toJson(
 
 class SubCategoryModel {
   int id;
-  int number;
+  var number;
   dynamic arabicTranslation;
   String arabicText;
   String tranlitration;

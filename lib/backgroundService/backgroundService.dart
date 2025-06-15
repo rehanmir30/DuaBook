@@ -85,7 +85,7 @@ class BackgroundService {
     Workmanager().registerPeriodicTask(
       "1",
       prayerTask,
-      frequency: Duration(seconds: 3), // Runs every 15 minutes
+      frequency: Duration(seconds: 3),
     );
   }
 }

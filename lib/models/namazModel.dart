@@ -2,7 +2,7 @@
 class NamazModel{
   String time='';
   String name='';
-  bool speakerEnabled=true;
+  String speakerEnabled='true';
 
   NamazModel({
    required this.time,

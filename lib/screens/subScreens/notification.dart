@@ -1,6 +1,7 @@
 import 'package:duabook/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -16,6 +17,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
   bool emailSwitch = false;
   bool morningSwitch = false;
   bool eveningSwitch = false;
+
+
+  @override
+  void initState() {
+    getSharedPrefs();
+  }
+
+  getSharedPrefs()async{
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    setState(() {
+      soundSwitch=prefs.getBool("soundSwitch")??false;
+      vibrationSwitch=prefs.getBool("vibrationSwitch")??false;
+      notificationSwitch=prefs.getBool("notificationSwitch")??false;
+      emailSwitch=prefs.getBool("emailSwitch")??false;
+      morningSwitch=prefs.getBool("morningSwitch")??false;
+      eveningSwitch=prefs.getBool("eveningSwitch")??false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +83,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                               Switch(
                                 value: soundSwitch,
-                                onChanged: (value) {
+                                onChanged: (value) async{
+                                  SharedPreferences prefs=await SharedPreferences.getInstance();
+                                  prefs.setBool("soundSwitch", value);
                                   setState(() {
                                     soundSwitch = value;
                                   });
@@ -88,7 +109,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                               Switch(
                                 value: vibrationSwitch,
-                                onChanged: (value) {
+                                onChanged: (value) async{
+                                  SharedPreferences prefs=await SharedPreferences.getInstance();
+                                  prefs.setBool("vibrationSwitch", value);
                                   setState(() {
                                     vibrationSwitch = value;
                                   });
@@ -112,7 +135,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                               Switch(
                                 value: notificationSwitch,
-                                onChanged: (value) {
+                                onChanged: (value) async{
+                                  SharedPreferences prefs=await SharedPreferences.getInstance();
+                                  prefs.setBool("notificationSwitch", value);
                                   setState(() {
                                     notificationSwitch = value;
                                   });
@@ -136,7 +161,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                               Switch(
                                 value: emailSwitch,
-                                onChanged: (value) {
+                                onChanged: (value) async{
+                                  SharedPreferences prefs=await SharedPreferences.getInstance();
+                                  prefs.setBool("emailSwitch", value);
                                   setState(() {
                                     emailSwitch = value;
                                   });
@@ -168,7 +195,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               Text("Morning Duas Reminder",style: TextStyle(color: rwhite,fontSize: 17),),
                               Switch(
                                 value: morningSwitch,
-                                onChanged: (value) {
+                                onChanged: (value) async{
+                                  SharedPreferences prefs=await SharedPreferences.getInstance();
+                                  prefs.setBool("morningSwitch", value);
                                   setState(() {
                                     morningSwitch = value;
                                   });
@@ -186,7 +215,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               Text("Evening Duas Reminder",style: TextStyle(color: rwhite,fontSize: 17),),
                               Switch(
                                 value: eveningSwitch,
-                                onChanged: (value) {
+                                onChanged: (value) async{
+                                  SharedPreferences prefs=await SharedPreferences.getInstance();
+                                  prefs.setBool("eveningSwitch", value);
                                   setState(() {
                                     eveningSwitch = value;
                                   });
